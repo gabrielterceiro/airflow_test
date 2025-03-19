@@ -16,7 +16,7 @@ with DAG(
         "email_on_failure": False,
         "email_on_retry": False,
         "retries": 1,
-        "retry_delay": timedelta(minutes=5),
+        "retry_delay": timedelta(second=10),
     },
     description="A simple tutorial DAG",
     schedule=timedelta(days=1),
@@ -34,7 +34,7 @@ with DAG(
     t2 = BashOperator(
         task_id="sleep",
         depends_on_past=False,
-        bash_command="sleep 5",
+        bash_command="sleep 1",
         retries=3,
     )
     t1 >> t2
