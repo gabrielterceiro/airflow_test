@@ -47,24 +47,22 @@ def python_func():
     run_dbt_command(dbt_command)
 
 DEFAULT_ARGS = {
-    'owner': 'airflow',
+    'owner': 'demo',
     'depends_on_past': False,
-    'start_date': datetime(2025, 3, 21),
+    'start_date': datetime(2025, 3, 20),
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
 }
 
-dag = DAG(
+with DAG(
     dag_id="dbt_python_operator_dag",default_args=DEFAULT_ARGS,
-    tags=["python_oper"],
+    tags=["spcs-demo"],
     schedule="@once",
     catchup=False,
-)
+) as dag:
 
-tarefa_python = PythonOperator(
-    task_id="python_task",
-    python_callable=python_func,
-    dag=dag,
-)
-
-tarefa_python
+    tarefa_python = PythonOperator(
+        task_id="python_task",
+        python_callable=python_func,
+        dag=dag,
+    )
